@@ -6,7 +6,7 @@ library(tmap)
 
 data("World", package = "tmap")
 
-download.file("https://github.com/elisamarchetto/Cartogram_chapter/raw/main/PresAbs.bias.rds", "PresAbs.bias.rds", mode = "wb")
+download.file("https://github.com/RCodingForEcology/III.4.cartogram/raw/main/PresAbs.bias.rds", "PresAbs.bias.rds", mode = "wb")
 PresAbs.bias <- readRDS("PresAbs.bias.rds")
 
 head(PresAbs.bias)
@@ -26,7 +26,7 @@ World.bias <- World.ea |>
     left_join(count.PresAbs.bias, by = "iso_a3") |>
     mutate(countISO = ifelse(is.na(countISO), 0, countISO))
 
-cart.cont <- cartogram_cont(World.bias, "countISO", itermax = 30, threshold = 0.16)
+cart.cont <- cartogram_cont(World.bias, "countISO", itermax = 30, threshold = 0.16, verbose = FALSE)
 
 map.standard <- tm_shape(World.bias) +
     tm_polygons("countISO", style = "jenks", palette = "cividis") +
@@ -38,7 +38,7 @@ map.carto1 <- tm_shape(cart.cont) +
               legend.width = 1.5, legend.outside = TRUE)
 tmap_arrange(map.standard, map.carto1)
 
-cart.ncont <- cartogram_ncont(World.bias, "countISO")
+cart.ncont <- cartogram_ncont(World.bias, weight = "countISO", k = 1)
 
 tm_shape(World.ea) +
     tm_borders() +
