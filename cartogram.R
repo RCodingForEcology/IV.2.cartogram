@@ -29,13 +29,13 @@ World.bias <- World.ea |>
 cart.cont <- cartogram_cont(World.bias, "countISO", itermax = 30, threshold = 0.16, verbose = FALSE)
 
 map.standard <- tm_shape(World.bias) +
-    tm_polygons("countISO", style = "jenks", palette = "cividis") +
-    tm_layout(frame = FALSE, legend.position = c("left", "bottom"),
-              legend.width = 1.5, legend.outside = TRUE)
+  tm_polygons(fill = "countISO",
+              fill.scale = tm_scale(style = "jenks", values = "cividis")) +
+  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
 map.carto1 <- tm_shape(cart.cont) +
-    tm_polygons("countISO", style = "jenks", palette = "cividis") +
-    tm_layout(frame = FALSE, legend.position = c("left", "bottom"),
-              legend.width = 1.5, legend.outside = TRUE)
+    tm_polygons(fill = "countISO",
+                fill.scale = tm_scale(style = "jenks", values = "cividis")) +
+  tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
 tmap_arrange(map.standard, map.carto1)
 
 cart.ncont <- cartogram_ncont(World.bias, weight = "countISO", k = 1)
@@ -43,16 +43,16 @@ cart.ncont <- cartogram_ncont(World.bias, weight = "countISO", k = 1)
 tm_shape(World.ea) +
     tm_borders() +
     tm_shape(cart.ncont) +
-    tm_polygons("countISO", style = "jenks", palette = "cividis") +
-    tm_layout(frame = FALSE, legend.position = c("left", "bottom"),
-              legend.width = 1.5, legend.outside = TRUE)
+    tm_polygons(fill = "countISO",
+                fill.scale = tm_scale(style = "jenks", values = "cividis")) +
+    tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
 
 cart.dorling <- cartogram_dorling(World.bias, "countISO")
 
 tm_shape(World.ea) +
     tm_borders() +
     tm_shape(cart.dorling) +
-    tm_polygons("countISO", style = "jenks", palette = "cividis") +
-    tm_layout(frame = FALSE, legend.position = c("left", "bottom"),
-              legend.width = 1.5, legend.outside = TRUE)
+    tm_polygons(fill = "countISO",
+                fill.scale = tm_scale(style = "jenks", values = "cividis")) +
+    tm_layout(frame = FALSE, legend.position = c("left", "bottom"))
 
